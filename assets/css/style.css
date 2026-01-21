@@ -1546,7 +1546,7 @@ body {
   left: -100%;
   width: 60%;
   min-height: auto;
-  background-color: #f2f4f0;
+  background-color: #e1f0d1;
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   transition: var(--transition);
   z-index: 999;
