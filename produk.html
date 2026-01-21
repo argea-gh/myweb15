@@ -189,6 +189,18 @@
           </div>
         </div>
       </div>
+		  <!-- ✅ FILTER DROPDOWN -->
+  <div class="filter-dropdown">
+    <select id="categoryFilter" class="dropdown-select">
+      <option value="all">Semua Kategori</option>
+      <option value="Madu Premium">Madu Premium</option>
+      <option value="Minuman Sehat">Minuman Sehat</option>
+      <option value="Minyak Herba">Minyak Herba</option>
+      <option value="Aneka Herbal">Aneka Herbal</option>
+      <option value="Perawatan Kulit">Perawatan Kulit</option>
+      <option value="Perawatan Pribadi">Perawatan Pribadi</option>
+    </select>
+  </div>
     </div>
   </section>
 
@@ -509,6 +521,18 @@ document.getElementById('productSearch')?.addEventListener('input', (e) => {
       });
     }
   });
+
+// ✅ EVENT: Filter Dropdown
+document.getElementById('categoryFilter')?.addEventListener('change', function() {
+  const category = this.value;
+  
+  // Reset search box
+  document.getElementById('productSearch').value = '';
+  
+  // Render produk sesuai kategori
+  renderProducts(category === 'all' ? 'all' : category);
+});
+	
 </script>
 
   <!-- ✅ SCRIPTS -->
