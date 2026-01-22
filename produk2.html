@@ -498,6 +498,19 @@
       }
     }
   });
+
+// ✅ EVENT: Reset Filter
+document.getElementById('resetFilter')?.addEventListener('click', function() {
+  // Reset dropdown ke "Semua Kategori"
+  document.getElementById('categoryFilter').value = 'all';
+  
+  // Kosongkan search box
+  document.getElementById('productSearch').value = '';
+  
+  // Tampilkan semua produk
+  renderProducts('all');
+});
+	
 </script>
 
   <!-- ✅ SCRIPTS -->
