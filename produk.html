@@ -173,38 +173,45 @@
     </div>
   </section>
 
-  <!-- ✅ SEARCH BOX (Tetap Ada) -->
-  <section class="section search-section">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2 class="section-title">Atau Cari Langsung Produk Anda</h2>
-        
-        <div class="search-box-container">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="productSearch" placeholder="Cari nama produk..." />
-			  	<button class="search-clear" id="searchClear" aria-label="Hapus pencarian">
-    			<i class="fas fa-times"></i>
-  				</button>
-          </div>
-			
-<!-- ✅ FILTER DROPDOWN -->
-  <div class="filter-dropdown">
-    <select id="categoryFilter" class="dropdown-select">
-      <option value="all">Semua Kategori</option>
-      <option value="Madu Premium">Madu Premium</option>
-      <option value="Minuman Sehat">Minuman Sehat</option>
-      <option value="Minyak Herba">Minyak Herba</option>
-      <option value="Aneka Herbal">Aneka Herbal</option>
-      <option value="Perawatan Kulit">Perawatan Kulit</option>
-      <option value="Perawatan Pribadi">Perawatan Pribadi</option>
-    </select>
-   </div>  
-			
+<!-- ✅ SEARCH BOX (Tetap Ada) -->
+<section class="section search-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2 class="section-title">Atau Cari Langsung Produk Anda</h2>
+      
+      <!-- Search Box -->
+      <div class="search-box-container">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="productSearch" placeholder="Cari nama produk..." />
+          <button class="search-clear" id="searchClear" aria-label="Hapus pencarian">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+
+	  <!-- Filter Dropdown + Reset (TERPISAH dari search-box-container) -->
+      <div class="filter-dropdown-wrapper">
+        <div class="filter-dropdown">
+          <select id="categoryFilter" class="dropdown-select">
+            <option value="all">Semua Kategori</option>
+            <option value="Madu Premium">Madu Premium</option>
+            <option value="Minuman Sehat">Minuman Sehat</option>
+            <option value="Minyak Herba">Minyak Herba</option>
+            <option value="Aneka Herbal">Aneka Herbal</option>
+            <option value="Perawatan Kulit">Perawatan Kulit</option>
+            <option value="Perawatan Pribadi">Perawatan Pribadi</option>
+          </select>
+        </div>
+     
+        <button id="resetFilter" class="reset-icon-btn" aria-label="Reset filter">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+		  
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ✅ GRID PRODUK (Tetap Ada) -->
   <section class="section products-all">
@@ -492,6 +499,19 @@
       }
     }
   });
+
+// ✅ EVENT: Reset Filter
+document.getElementById('resetFilter')?.addEventListener('click', function() {
+  // Reset dropdown ke "Semua Kategori"
+  document.getElementById('categoryFilter').value = 'all';
+  
+  // Kosongkan search box
+  document.getElementById('productSearch').value = '';
+  
+  // Tampilkan semua produk
+  renderProducts('all');
+});
+	
 </script>
 
   <!-- ✅ SCRIPTS -->
