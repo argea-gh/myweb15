@@ -1749,12 +1749,22 @@ body {
 }
 
 /* ────────────────────────────────────────── */
-/* FILTER DROPDOWN */
+/* FILTER DROPDOWN + RESET ICON */
 /* ────────────────────────────────────────── */
 
-.filter-dropdown {
-  margin-top: 16px;
+/* Wrapper utama */
+.filter-dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
+  margin-top: 16px; /* ← jarak dari search box */
+}
+
+/* Dropdown */
+.filter-dropdown {
+  flex: 1;
+  min-width: 200px;
 }
 
 .dropdown-select {
@@ -1780,15 +1790,7 @@ body {
   border-color: var(--green-light);
 }
 
-.dropdown-select option {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-}
-
-/* ────────────────────────────────────────── */
-/* RESET FILTER ICON — MINIMALIS */
-/* ────────────────────────────────────────── */
-
+/* Ikon Reset */
 .reset-icon-btn {
   background: none;
   border: none;
@@ -1815,22 +1817,7 @@ body {
   box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
 }
 
-/* Update CSS untuk Wrapper */
-
-.filter-dropdown-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-
-.filter-dropdown {
-  flex: 1;
-  min-width: 200px;
-}
-
-/* Responsif: di mobile, ikon reset tetap muat */
+/* Responsif Mobile */
 @media (max-width: 480px) {
   .filter-dropdown-wrapper {
     flex-wrap: wrap;
@@ -1838,7 +1825,6 @@ body {
   
   .filter-dropdown {
     width: 100%;
-    min-width: auto;
   }
   
   .reset-icon-btn {
