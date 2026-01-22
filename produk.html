@@ -339,70 +339,34 @@
   <div class="cart-overlay" id="cartOverlay"></div>
 
   <!-- ✅ LOADER SCRIPT -->
-  <script>
-    // Muat komponen secara dinamis
-    async function loadComponents() {
-      const header = await fetch('components/header.html').then(r => r.text());
-      const footer = await fetch('components/footer.html').then(r => r.text());
-      const scripts = await fetch('components/scripts.html').then(r => r.text());
-      
-      document.getElementById('header-container').innerHTML = header;
-      document.getElementById('footer-container').innerHTML = footer;
-      document.getElementById('scripts-container').innerHTML = scripts;
-      
-      // Inisialisasi JS (mobile menu, dll)
-      if (typeof initHeader !== 'undefined') initHeader();
-    }
-    
-    // Jalankan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', loadComponents);
-  </script>
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     // Render semua produk saat pertama kali
     renderProducts('all');
 
-// ✅ EVENT: Hapus pencarian via tombol X
-document.getElementById('searchClear')?.addEventListener('click', () => {
-  const searchInput = document.getElementById('productSearch');
-  searchInput.value = '';
-  searchInput.focus();
-  
-  // Trigger pencarian kosong
-  if (typeof searchProducts === 'function') {
-    searchProducts('');
-  } else {
-    // Fallback: render semua produk
-    renderProducts('all');
-  }
-});
+    // ✅ EVENT: Hapus pencarian via tombol X
+    document.getElementById('searchClear')?.addEventListener('click', () => {
+      const searchInput = document.getElementById('productSearch');
+      searchInput.value = '';
+      searchInput.focus();
+      renderProducts('all');
+    });
 
-// ✅ OPSIONAL: Update tampilan tombol X saat ketik (fallback)
-document.getElementById('productSearch')?.addEventListener('input', (e) => {
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) {
-    clearBtn.style.opacity = e.target.value ? '1' : '0';
-  }
-  
-  // Jalankan pencarian
-  if (typeof searchProducts === 'function') {
-    searchProducts(e.target.value);
-  }
-});
-	  
+    // ✅ EVENT: Filter Dropdown
+    document.getElementById('categoryFilter')?.addEventListener('change', function() {
+      const category = this.value;
+      document.getElementById('productSearch').value = '';
+      renderProducts(category === 'all' ? 'all' : category);
+    });
 
     // ✅ FUNGSI FILTER BERDASARKAN PERSONA
     function filterByPersona(keywords) {
       let productList = JSON.parse(localStorage.getItem('herbaprimaProducts')) || products;
-      
-      // Gabungkan semua teks yang bisa dicari
       const filtered = productList.filter(product => {
         const text = `${product.name} ${product.category} ${product.description || ''}`.toLowerCase();
         return keywords.some(kw => text.includes(kw.toLowerCase()));
       });
 
-      // Render hasil
       const grid = document.getElementById('productsGrid');
       if (grid) {
         grid.innerHTML = '';
@@ -435,19 +399,7 @@ document.getElementById('productSearch')?.addEventListener('input', (e) => {
             `;
             grid.appendChild(card);
           });
-
-          // Event: Pilih Produk → modal
-          document.querySelectorAll('.btn-add').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              e.preventDefault();
-              const id = e.target.dataset.id;
-              const product = productList.find(p => p.id === id);
-              if (product) openProductModal(product);
-            });
-          });
         }
-        
-        // Scroll ke produk
         document.querySelector('.products-all').scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -460,17 +412,16 @@ document.getElementById('productSearch')?.addEventListener('input', (e) => {
       });
     });
 
-    // ✅ SEARCH BOX (tetap gunakan fungsi dari main.js jika ada)
+    // ✅ SEARCH BOX
     const searchInput = document.getElementById('productSearch');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const query = e.target.value.trim();
         if (!query) {
-          renderProducts('all'); // tampilkan semua jika kosong
+          renderProducts('all');
           return;
         }
         
-        // Gunakan logika pencarian sederhana
         let productList = JSON.parse(localStorage.getItem('herbaprimaProducts')) || products;
         const filtered = productList.filter(product => 
           product.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -509,32 +460,38 @@ document.getElementById('productSearch')?.addEventListener('input', (e) => {
               `;
               grid.appendChild(card);
             });
-
-            document.querySelectorAll('.btn-add').forEach(btn => {
-              btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const id = e.target.dataset.id;
-                const product = productList.find(p => p.id === id);
-                if (product) openProductModal(product);
-              });
-            });
           }
         }
       });
     }
   });
 
-// ✅ EVENT: Filter Dropdown
-document.getElementById('categoryFilter')?.addEventListener('change', function() {
-  const category = this.value;
-  
-  // Reset search box
-  document.getElementById('productSearch').value = '';
-  
-  // Render produk sesuai kategori
-  renderProducts(category === 'all' ? 'all' : category);
-});
-	
+  // ✅ EVENT DELEGATION GLOBAL — SOLUSI UTAMA
+  document.addEventListener('click', function(e) {
+    // Cek klik pada gambar produk
+    if (e.target.closest('.product-card img')) {
+      const img = e.target.closest('.product-card img');
+      const id = img.dataset.id;
+      
+      if (id) {
+        let productList = JSON.parse(localStorage.getItem('herbaprimaProducts')) || products;
+        const product = productList.find(p => p.id === id);
+        if (product) openProductModal(product);
+      }
+    }
+    
+    // Cek klik pada tombol "Pilih Produk"
+    if (e.target.closest('.btn-add')) {
+      const btn = e.target.closest('.btn-add');
+      const id = btn.dataset.id;
+      
+      if (id) {
+        let productList = JSON.parse(localStorage.getItem('herbaprimaProducts')) || products;
+        const product = productList.find(p => p.id === id);
+        if (product) openProductModal(product);
+      }
+    }
+  });
 </script>
 
   <!-- ✅ SCRIPTS -->
