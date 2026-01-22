@@ -1786,34 +1786,33 @@ body {
 }
 
 /* ────────────────────────────────────────── */
-/* FILTER CONTROLS (DROPDOWN + RESET) */
+/* RESET FILTER ICON — MINIMALIS */
 /* ────────────────────────────────────────── */
 
-.filter-controls {
-  margin-top: 16px;
+.reset-icon-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+  margin-left: 8px;
 }
 
-.filter-dropdown {
-  flex: 1;
-  min-width: 200px;
+.reset-icon-btn:hover {
+  color: var(--green-primary);
+  transform: scale(1.1);
 }
 
-.reset-btn {
-  padding: 14px 20px;
-  font-size: 0.95rem;
-  white-space: nowrap;
+.reset-icon-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
 }
 
-/* Responsif: di mobile jadi full-width */
-@media (max-width: 480px) {
-  .filter-controls {
-    flex-direction: column;
-  }
-  
-  .reset-btn {
-    width: 100%;
-  }
-}
+
